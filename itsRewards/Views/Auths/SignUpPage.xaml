@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.Auths.SignUpPage"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels.Auths;assembly=itsRewards"
+    xmlns:converter="clr-namespace:itsRewards.Extensions.Converters;assembly=itsRewards"
+    xmlns:behavior="clr-namespace:itsRewards.Extensions.Behaviors;assembly=itsRewards"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    Visual="Material"
+    xmlns:controls="clr-namespace:itsRewards.Extensions.Controls;assembly=itsRewards"
+    x:DataType="vm:SignUpPageViewModel"
+    Title="Sign Up"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
+    <!--<ContentPage.BindingContext>
+        <vm:SignUpPageViewModel/>
+    </ContentPage.BindingContext>-->
+    <ContentPage.Resources>
+        <converter:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+         <converter:InvertBoolConverter x:Key="InvertBoolConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid
+                RowDefinitions="*,auto,80,auto"
+                Padding="40"> 
+                <StackLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                    <Image Style="{StaticResource AppLogoStyle}"/>
+                    <!--Label Text="itsRewards.com" Style="{StaticResource TitleLabelStyle}"/-->
+                </StackLayout>
+
+
+                <StackLayout
+                    Grid.Row="1"
+                    Spacing="0"
+                    IsVisible="{Binding SignUpVisible}">
+
+                    <!--<Label Text="Username"/>
+                    <Frame>
+                        <controls:CustomEntry Text="{Binding UserName.Value}" Placeholder="Enter your username">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateUsernameCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                    <Label
+                        Text="{Binding UserName.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}"/>-->
+                    <Label Text="Email"/>
+                    <Frame>
+                        <controls:CustomEntry  MaxLength="150" Text="{Binding Email.Value}" Placeholder="Enter Your Email Address" Keyboard="Email">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateEmailCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                    <Label
+                        Text="{Binding Email.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}" />
+                    <Label Text="Password"/>
+                    <Frame>
+                        <controls:CustomEntry
+                            Placeholder="Enter Password"
+                            Text="{Binding Password.Value}"
+                            IsPassword="True" MaxLength="25">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidatePasswordCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                     <Label
+                        Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}"/>
+                    <Label Text="Confirm Password"/>
+                    <Frame>
+                        <controls:CustomEntry
+                            Placeholder="Confirm Password"
+                            Text="{Binding ConfirmPassword.Value}"
+                            IsPassword="True" MaxLength="25">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidatePasswordCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                    <Label
+                        Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}"/>
+                    <Label Text="Cell"/>
+                    <Frame>
+                        <controls:CustomEntry Text="{Binding Cell.Value}" Placeholder="Enter your cell" Keyboard="Telephone" MaxLength="10">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateCellCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                    <Label
+                        Text="{Binding Cell.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}"/>
+
+                    <Button
+                        Text="SIGN UP"
+                        Command="{Binding SignUpCommand}"
+                        Margin="0,10,0,0"/> 
+                </StackLayout>
+                <StackLayout IsVisible="{Binding IsFirstSignUpFinished}" Grid.Row="1" HorizontalOptions="FillAndExpand">
+                    
+                    <Label Text="Verification Code"/>
+                    <StackLayout Padding="5" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                         <Frame><controls:PinEntry x:Name="Pin1" TextChanged="Pin1_TextChanged" MaxLength="1"  Keyboard="Numeric" HeightRequest="40" WidthRequest="30" HorizontalTextAlignment="Center"/></Frame>
+                         <Frame><controls:PinEntry x:Name="Pin2" TextChanged="Pin2_TextChanged" MaxLength="1"  Keyboard="Numeric" HeightRequest="40" WidthRequest="30" HorizontalTextAlignment="Center"/></Frame>
+                         <Frame><controls:PinEntry x:Name="Pin3" TextChanged="Pin3_TextChanged" MaxLength="1"  Keyboard="Numeric" HeightRequest="40" WidthRequest="30" HorizontalTextAlignment="Center"/></Frame>
+                         <Frame><controls:PinEntry x:Name="Pin4" TextChanged="Pin4_TextChanged" MaxLength="1"  Keyboard="Numeric" HeightRequest="40" WidthRequest="30" HorizontalTextAlignment="Center"/></Frame>
+                         <Frame><controls:PinEntry x:Name="Pin5" TextChanged="Pin5_TextChanged" MaxLength="1"  Keyboard="Numeric" HeightRequest="40" WidthRequest="30" HorizontalTextAlignment="Center"/></Frame>
+                         <Frame><controls:PinEntry x:Name="Pin6"  MaxLength="1"  Keyboard="Numeric" HeightRequest="40" WidthRequest="30" HorizontalTextAlignment="Center"/></Frame>
+                    </StackLayout>
+                    <Button Text="Verify Code" Clicked="OnVerifyCode_Click" />
+                    <StackLayout>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Didnt receive a code? " FontSize="15" TextColor="Black"  FontFamily="fontdefault"/>
+                                    <Span Text="Resend" FontSize="15" TextColor="#6C63FF"  FontFamily="fontdefault"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ResendPinCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                     </StackLayout>
+                </StackLayout>
+
+
+
+                <Label IsVisible="{Binding HasNotRegistered,Converter={StaticResource InvertBoolConverter}}"
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Do you want to "/>
+                            <Span Text="Sign In?" FontFamily="Ubuntu Bold" FontSize="14">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding LoginInCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Grid Grid.Row="1" IsVisible="{Binding HasNotRegistered}"
+                      RowDefinitions="auto,auto,auto,auto">
+                     <!-- Address information -->
+                    <Grid Grid.Row="0"
+                          Margin="5"
+                          RowDefinitions="0,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                          ColumnDefinitions="Auto,*">
+                         
+                  
+                        <Label Text="Address1"
+                               Grid.Row="1"
+                               Grid.Column="0"/>
+                        <Frame  Grid.Row="1"
+                               Grid.Column="1">
+                                <Entry MaxLength="100" Text="{Binding Address1}" />
+                            </Frame>
+                        <Label Text="Address2"
+                            Grid.Row="3"
+                            Grid.Column="0"/>
+                        <Frame Grid.Row="3"
+                               Grid.Column="1">
+                            <Entry MaxLength="100"  Text="{Binding Address2}"/>
+                            </Frame>
+                        <Label Text="Address3"
+                               Grid.Row="4"
+                               Grid.Column="0"/>
+                        <Frame Grid.Row="4"
+                               Grid.Column="1">
+                            <Entry MaxLength="100"  Text="{Binding Address3}"  />    
+                        </Frame>
+                        <Label Text="City"
+                               Grid.Row="5"
+                               Grid.Column="0"/>
+                        <Frame Grid.Row="5"
+                               Grid.Column="1">
+                            <Entry MaxLength="50"  Text="{Binding City}" />
+                            </Frame>
+                        <Label Text="State"
+                               Grid.Row="6"
+                               Grid.Column="0"/>
+                        <Frame Grid.Row="6"
+                               Grid.Column="1">
+                        <Picker 
+                            HeightRequest="40"
+                            SelectedItem="{Binding State,Mode=TwoWay}"
+                            ItemsSource="{Binding StateList}"/>
+                         </Frame>
+              
+                        <Label Text="ZIP"
+                               Grid.Row="7"
+                               Grid.Column="0"/>
+
+                        <Frame  Grid.Row="7"
+                               Grid.Column="1">
+                        <Entry Text="{Binding Zip}"
+                               Keyboard="Numeric" MaxLength="5"/>
+                        
+                        </Frame>
+                       
+                         <Label Text="Tobacoo Member"
+                               Grid.Row="8"
+                               Grid.Column="0"/>
+
+                        <Frame  Grid.Row="8"
+                               Grid.Column="1">
+                        <Entry Text="{Binding TobaccoMember}"/>
+                        
+                        </Frame>
+
+                        <Label Text="Cigar"
+                               Grid.Row="9"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding Cigar}"
+                                Grid.Row="9"
+                                Grid.Column="1"
+                                HorizontalOptions="StartAndExpand"/>
+
+                        <Label Text="Mst"
+                               Grid.Row="10"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding Mst}"
+                                Grid.Row="10"
+                                Grid.Column="1"
+                                HorizontalOptions="StartAndExpand"/>
+
+                        <Label Text="OTDN"
+                               Grid.Row="11"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding OTDN}"
+                                Grid.Row="11"
+                                Grid.Column="1"
+                                HorizontalOptions="StartAndExpand"/>
+
+                        <Label Text="Cigarette"
+                               Grid.Row="12"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding Cigarette}"
+                                Grid.Row="12"
+                                Grid.Column="1"
+                                HorizontalOptions="StartAndExpand"/>
+
+                        <StackLayout Grid.Row="13"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <CheckBox x:Name="chkVerify" CheckedChanged="CheckBox_CheckedChanged"/>
+                            <Label Text="By Clicking Submit, Consent to Success Systems for selling my personal information to Altria"
+                               Grid.Row="12"
+                               Grid.Column="0"/>
+                        </StackLayout>
+
+                        <Button
+                            x:Name="btnSubmit"
+                            IsEnabled="False"
+                            Opacity="0.5"
+                            Grid.Row="14"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Text="Submit"
+                            Command="{Binding SignUpCommand}"
+                            Margin="0,10,0,0"/>
+                        <Button
+                            Grid.Row="15"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Text="Cancel"
+                            Command="{Binding CancelCommand}"
+                            Margin="0,10,0,0"/> 
+                        </Grid>
+
+                    <!-- Store info-->
+                    <Grid Grid.Row="1" IsVisible="false"
+                          ColumnDefinitions="auto,*"
+                          RowDefinitions="35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35">
+
+                        <Label Text="Store name" Grid.Row="1" Grid.Column="0" />
+                        <Frame Grid.Row="1" Grid.Column="1">
+                        <Entry Placeholder="StoreName" Grid.Row="1" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="Account #" Grid.Row="2" Grid.Column="0" />
+                        <Frame Grid.Row="2" Grid.Column="1">
+                        <Entry Placeholder="Account Number" Grid.Row="2" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="Tier" Grid.Row="3" Grid.Column="0" />
+                        <Frame Grid.Row="3" Grid.Column="1">
+                        <Entry Placeholder="Tier" Grid.Row="3" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="Registered?" Grid.Row="4" Grid.Column="0" />
+                        <Switch  Grid.Row="4" Grid.Column="1" HorizontalOptions="Start"/>
+
+                         <Label Text="Active?" Grid.Row="5" Grid.Column="0" />
+                        <Switch  Grid.Row="5" Grid.Column="1" HorizontalOptions="Start"/>
+
+
+                         <Label Text="Address1" Grid.Row="6" Grid.Column="0" />
+                        <Frame Grid.Row="6" Grid.Column="1">
+                        <Entry Placeholder="Address1" Grid.Row="6" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="Address2" Grid.Row="7" Grid.Column="0" />
+                        <Frame Grid.Row="7" Grid.Column="1">
+                        <Entry Placeholder="Address2" Grid.Row="7" Grid.Column="1"/>
+                        </Frame>
+                         <Label Text="Address3" Grid.Row="8" Grid.Column="0" />
+                        <Frame Grid.Row="8" Grid.Column="1">
+                        <Entry Placeholder="Address3" Grid.Row="8" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="City" Grid.Row="9" Grid.Column="0" />
+                        <Frame Grid.Row="9" Grid.Column="1">
+                        <Entry Placeholder="City" Grid.Row="9" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="State" Grid.Row="10" Grid.Column="0" />
+                        <Frame Grid.Row="10" Grid.Column="1">
+                        <Entry Placeholder="State" Grid.Row="10" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="Zip" Grid.Row="11" Grid.Column="0" />
+                        <Frame Grid.Row="11" Grid.Column="1">
+                        <Entry Placeholder="Zip" Grid.Row="11" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="Device" Grid.Row="12" Grid.Column="0" />
+                        <Frame Grid.Row="12" Grid.Column="1">
+                        <Entry Placeholder="Device" Grid.Row="12" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="Merchant" Grid.Row="13" Grid.Column="0" />
+                        <Frame Grid.Row="13" Grid.Column="1">
+                        <Entry Placeholder="Merchant" Grid.Row="13" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="MAC" Grid.Row="14" Grid.Column="0" />
+                        <Frame Grid.Row="14" Grid.Column="1">
+                        <Entry Placeholder="MAC" Grid.Row="14" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="Secret" Grid.Row="15" Grid.Column="0" />
+                        <Frame Grid.Row="15" Grid.Column="1">
+                        <Entry Placeholder="Secret" Grid.Row="15" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="Longitude" Grid.Row="16" Grid.Column="0" />
+                        <Frame Grid.Row="16" Grid.Column="1">
+                        <Entry Placeholder="Longitude" Grid.Row="16" Grid.Column="1"/>
+                            </Frame>
+                         <Label Text="Latitude" Grid.Row="17" Grid.Column="0" />
+                        <Frame Grid.Row="17" Grid.Column="1">
+                        <Entry Placeholder="Latitude" Grid.Row="17" Grid.Column="1"/>
+                            </Frame>
+                        <Label Text="Promotion" Grid.Row="18" Grid.Column="0"/>
+                        <Frame Grid.Row="18" Grid.Column="1">
+                        <Picker Grid.Row="18" Grid.Column="1">
+                            <Picker.ItemsSource>
+                               <x:Array Type="{x:Type x:String}">
+                                    <x:String>MARLBORO CIGARETTES</x:String>
+                                </x:Array>
+                                
+                            </Picker.ItemsSource>
+                        </Picker>
+                            </Frame>
+                        <Label Text="Loyalty" Grid.Row="19" Grid.Column="0"/>
+                        <Frame Grid.Row="19" Grid.Column="1">
+                        <Picker Grid.Row="19" Grid.Column="1">
+                            <Picker.ItemsSource>
+                               <x:Array Type="{x:Type x:String}">
+                                    <x:String>MARLBORO CIGARETTES</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        </Frame>
+                        <Label Text="Offering names" Grid.Row="20" Grid.Column="0"/>
+                         <Frame Grid.Row="20" Grid.Column="1">
+                        <Picker Grid.Row="20" Grid.Column="1">
+                            <Picker.ItemsSource>
+                               <x:Array Type="{x:Type x:String}">
+                                    <x:String>Cigars Offerings</x:String>
+                                     <x:String>Smokeless Offerings</x:String>
+                                     <x:String>Cigerate Offerings</x:String>
+                                     <x:String>EVape Offerings</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        </Frame>
+                    </Grid>
+             </Grid>
+            </Grid>
+        </ScrollView>        
+    </ContentPage.Content>
+</ContentPage>
+

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "825747264431",
+    "project_id": "success-itsreward",
+    "storage_bucket": "success-itsreward.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825747264431:android:d82dc2bf45046f352c555a",
+        "android_client_info": {
+          "package_name": "com.successsystems.itsrewards"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq4S6Slq6gbJavqF7BumJPHRv0EXgKMjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

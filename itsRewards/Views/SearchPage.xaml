@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.SearchPage"
+    xmlns:extensions="clr-namespace:itsRewards.Extensions"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels;assembly=itsRewards"
+    xmlns:model="clr-namespace:itsRewards.Models;assembly=itsRewards"
+    Visual="Material"
+    x:DataType="vm:SearchPageViewModel"
+    Title="Search"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    x:Name="MySearchPage">
+    <ContentPage.BindingContext>
+        <vm:SearchPageViewModel x:Name="ViewModel"/>
+    </ContentPage.BindingContext>
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,Auto"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label
+                Text="Search"
+                Style="{StaticResource TitleLabelStyle}"
+                VerticalOptions="Center"/>
+            <ImageButton
+                Grid.Column="1"
+                Source="{extensions:ImageResource Source=itsRewards.Resources.Images.settings.png}"
+                Command="{Binding SettingsCommand}"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="5"
+                HorizontalOptions="End"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout
+            Padding="20"
+            VerticalOptions="FillAndExpand">
+            <SearchBar
+                BackgroundColor="Transparent"
+                HeightRequest="40"
+                Margin="-10,0,-10,0"
+                Text="{Binding SearchKeyword}"
+                SearchCommand="{Binding SearchCommand}"/>
+            <RefreshView
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                Command="{Binding LoadDataCommand}">
+            <CollectionView
+                ItemsSource="{Binding FilteredStores}"
+                SelectionMode="None"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        Span="2"
+                        HorizontalItemSpacing="16"
+                        VerticalItemSpacing="16"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Store">
+                        <Grid
+                            Padding="0,0,0,0">
+                            <Frame
+                                BackgroundColor="#FFFFFF"
+                                BorderColor="Transparent">
+                                <Grid
+                                    RowDefinitions="120,auto,auto,auto"
+                                    ColumnDefinitions="*"
+                                    Padding="10"
+                                    RowSpacing="5"
+                                    ColumnSpacing="16">
+                                    <Image
+                                        Style="{StaticResource ItemImageStyle}">
+                                        <Image.Source>
+                                            <UriImageSource
+                                                Uri="{Binding Image}"
+                                                CacheValidity="15"
+                                                CachingEnabled="True" />
+                                        </Image.Source>
+                                    </Image>
+
+                                    <ImageButton
+                                        Source="{extensions:ImageResource Source=itsRewards.Resources.Images.favorite.png}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"/>
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Text="{Binding StoreName}"
+                                        Style="{StaticResource ItemHeaderLabelStyle}"/>
+
+                                    <Label
+                                        Grid.Row="2"
+                                        Text="{Binding Address}"
+                                        Style="{StaticResource ItemDetailLabelStyle}"/>
+
+                                    <StackLayout
+                                        Grid.Row="3"
+                                        Spacing="2"
+                                        Orientation="Horizontal">
+                                        <Image
+                                            Source="{extensions:ImageResource Source=itsRewards.Resources.Images.star.png}"
+                                            Style="{StaticResource IconImage}"/>
+                                        <Label
+                                            Text="5.0"
+                                            Style="{StaticResource ItemDetailLabelStyle}"/>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                            <Button
+                                Command="{Binding BindingContext.OpenStoreDetailCommand, Source={x:Reference Name=MySearchPage}}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label
+                        Text="Sorry, No record found!"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"/>
+                </CollectionView.EmptyView>
+            </CollectionView>        
+            </RefreshView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

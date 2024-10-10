@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    x:Class="itsRewards.Views.WebViewPage">
+    <Shell.TitleView>
+        <Grid HorizontalOptions="Center"  ColumnDefinitions="4*,1*" VerticalOptions="FillAndExpand">
+            <Label x:Name="lblTitle"
+                Text="Validation"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource TitleLabelStyle}"
+                VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand">
+            <WebView x:Name="webView" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

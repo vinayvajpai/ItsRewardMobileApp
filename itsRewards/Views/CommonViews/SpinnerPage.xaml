@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage
+    x:Class="itsRewards.Views.CommonViews.SpinnerPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    BackgroundColor="#80000000"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Frame
+            HeightRequest="80"
+            WidthRequest="80"
+            CornerRadius="40"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Padding="2"
+            BackgroundColor="{StaticResource ThemeColor}">
+            <ActivityIndicator
+                x:Name="spinnerImage"
+                IsRunning="True"
+                Color="White"
+                Scale="1.5"/>
+        </Frame>
+    </ContentPage.Content>
+</pages:PopupPage>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.VerifyInfoPage">
+    <Shell.TitleView>
+        <Grid HorizontalOptions="Center"  ColumnDefinitions="4*,1*" VerticalOptions="FillAndExpand">
+            <Label x:Name="lblTitle"
+                Text="Verify Information"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource TitleLabelStyle}"
+                VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid Grid.Row="0"
+                          Margin="20"
+                          RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                          ColumnDefinitions="Auto,*">
+
+
+            <Label Text="First Name"
+                               Grid.Row="0"
+                               Grid.Column="0"/>
+            <Frame  Grid.Row="0"
+                               Grid.Column="1">
+                <Entry MaxLength="100" Text="{Binding Address1}" />
+            </Frame>
+            <Label Text="Last Name"
+                            Grid.Row="1"
+                            Grid.Column="0"/>
+            <Frame Grid.Row="1"
+                               Grid.Column="1">
+                <Entry MaxLength="100"  Text="{Binding Address2}"/>
+            </Frame>
+            <Label Text="Address"
+                               Grid.Row="2"
+                               Grid.Column="0"/>
+            <Frame Grid.Row="2"
+                               Grid.Column="1">
+                <Entry MaxLength="100"  Text="{Binding Address3}"  />
+            </Frame>
+            <Label Text="City"
+                               Grid.Row="3"
+                               Grid.Column="0"/>
+            <Frame Grid.Row="3"
+                               Grid.Column="1">
+                <Entry MaxLength="50"  Text="{Binding City}" />
+            </Frame>
+            <Label Text="State"
+                               Grid.Row="4"
+                               Grid.Column="0"/>
+            <Frame Grid.Row="4"
+                               Grid.Column="1">
+                <Picker 
+                            HeightRequest="40"
+                            SelectedItem="{Binding State,Mode=TwoWay}"
+                            ItemsSource="{Binding StateList}"/>
+            </Frame>
+            <Label Text="Email"
+                               Grid.Row="5"
+                               Grid.Column="0"/>
+            <Frame Grid.Row="5"
+                               Grid.Column="1">
+                <Entry MaxLength="50"  Text="{Binding City}" />
+            </Frame>
+            <Label Text="Cell"
+                               Grid.Row="6"
+                               Grid.Column="0"/>
+
+            <Frame  Grid.Row="6"
+                               Grid.Column="1">
+                <Entry Text="{Binding Zip}"
+                               Keyboard="Numeric" MaxLength="5"/>
+
+            </Frame>
+
+            <Label Text="Date of Birth"
+                               Grid.Row="7"
+                               Grid.Column="0"/>
+
+            <Frame  Grid.Row="7"
+                               Grid.Column="1">
+                <DatePicker HeightRequest="40"/>
+
+            </Frame>
+            <Label Text="Last 4 of SS#"
+                               Grid.Row="8"
+                               Grid.Column="0"/>
+
+            <Frame  Grid.Row="8"
+                               Grid.Column="1">
+                <Entry Text="{Binding TobaccoMember}"/>
+
+            </Frame>
+
+            <Button
+                            x:Name="Save"
+                            Grid.Row="9"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Text="Submit"
+                            Command="{Binding SignUpCommand}"
+                            Margin="0,10,0,0"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <noscript><meta http-equiv="refresh" content="0;url=https://agechecker.net/noscript"></noscript>
+    <script>
+        (function (w, d) {
+            var config = {
+                element: "#registration-button",
+                key: "xsK6jqejdLBqpAKlTarTdsyiMiAmAQXZ",
+                fields: {
+                    first_name: "#first-name-field",
+                    last_name: "#last-name-field",
+                },
+				onclosed: function() {
+					//setCookie("ac_custom_verified", true);
+					alert('Verified');
+				}, 
+				 onpresubmit: function(data, done, cancel) {
+				  // The customer data is available in data.customer
+				  // Send this data to your server or add your own code here to bypass the verification.
+				  // (for example, if the customer is already verified in your own database).
+					//console.log("The data from the file is: " + data.agechecker_uuid);
+				  // Call done() to continue with the verification process as normal.
+				  done();
+				  // Call cancel() to cancel the verification process and submit the checkout form.
+				},
+				
+				onstatuschanged: function(verification) { 
+
+					alert('Status Changed');
+				}
+				
+            };
+
+            w.AgeCheckerConfig = config; if (config.path && (w.location.pathname + w.location.search).indexOf(config.path)) return;
+            var h = d.getElementsByTagName("head")[0]; var a = d.createElement("script"); a.src = "https://cdn.agechecker.net/static/popup/v1/popup.js"; a.crossOrigin = "anonymous";
+            a.onerror = function (a) { w.location.href = "https://agechecker.net/loaderror"; }; h.insertBefore(a, h.firstChild);
+        })(window, document);
+    </script>
+
+</head>
+<body>
+
+    <h1>ID Validation</h1>
+
+    <p>My first paragraph.</p>
+    <button id="registration-button">Identify Validation</button>
+</body>
+</html>

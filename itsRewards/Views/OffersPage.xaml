@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.OffersPage"
+    xmlns:extensions="clr-namespace:itsRewards.Extensions"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels;assembly=itsRewards"
+    xmlns:m="clr-namespace:itsRewards.Models;assembly=itsRewards"
+    xmlns:converter="clr-namespace:itsRewards.Extensions.Converters;assembly=itsRewards"
+    xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"  
+    xmlns:ffSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"  
+    xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+    Visual="Material"
+    x:DataType="vm:OffersPageViewModel"
+    Title="Offers"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    x:Name="MyOffersPage">
+    <ContentPage.BindingContext>
+        <vm:OffersPageViewModel  x:Name="ViewModel"/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converter:IsNotEmptyStringConverter x:Key="IsNotEmptyStringConverter" />
+        <converter:ImageSourceFromStreamConverter x:Key="ImageSourceFromStreamConverter" />
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="Auto,*,Auto"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label
+                Grid.Column="1"
+                Text="Offers"
+                Style="{StaticResource TitleLabelStyle}"
+                VerticalOptions="Center"/>
+            <ImageButton
+                Grid.Column="2"
+                Source="{extensions:ImageResource Source=itsRewards.Resources.Images.settings.png}"
+                Command="{Binding SettingsCommand}"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="5"
+                HorizontalOptions="End"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout
+            Spacing="0">
+            <ScrollView
+                Orientation="Horizontal"
+                HorizontalScrollBarVisibility="Never">
+                <StackLayout
+                    Orientation="Horizontal"
+                    BindableLayout.ItemsSource="{Binding OfferCategories}"
+                    Spacing="10"
+                    Margin="20,16,20,16">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="m:OfferCategory">
+                            <Button
+                                Text="{Binding Name}"
+                                BorderColor="{StaticResource ThemAlphaColor}"
+                                TextColor="{StaticResource ThemAlphaColor}"
+                                BackgroundColor="{StaticResource OverlayWhiteColor}"
+                                BorderWidth="1"
+                                Padding="16,0,16,0"
+                                Command="{Binding BindingContext.SelectOfferCategoryCommand, Source={x:Reference Name=MyOffersPage}}"
+                                CommandParameter="{Binding .}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="true">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource ThemeColor}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource PageBackgroundColor}"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+            <Line
+                BackgroundColor="{StaticResource ThemAlphaColor}"
+                HeightRequest="1"
+                Opacity="0.5"
+                HorizontalOptions="FillAndExpand"
+                Margin="0,0,0,20"/>
+            <CollectionView
+                ItemsSource="{Binding Offers}"
+                VerticalScrollBarVisibility="Never"
+                Margin="20"
+                SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:Offer">
+                        <Frame
+                            BackgroundColor="White"
+                            Padding="20">
+                            <StackLayout
+                                Orientation="Horizontal"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="FillAndExpand">
+                                <ff:CachedImage
+                                    CacheType="Memory"
+                                    Source="{Binding BrandingFullURL}"
+                                    LoadingPlaceholder="http://smokinrebate.us:8082/images/marlboro-default.png"
+                                    HeightRequest="40"
+                                    WidthRequest="40"
+                                   >
+                                    <ff:CachedImage.Transformations>
+                                        <ffTransformations:RoundedTransformation Radius="240"  BorderSize="10" BorderHexColor="#80396EB0" />
+                                    </ff:CachedImage.Transformations>
+
+                                </ff:CachedImage>
+                                <Label
+                                    Text="{Binding Name}"
+                                    Style="{StaticResource ItemHeaderLabelStyle}"
+                                    HorizontalTextAlignment="Center"
+                                    TextColor="{StaticResource ThemeColor}"/>
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.OpenOfferCommand, Source={x:Reference Name=MyOffersPage}}" CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label
+                        Text="Sorry! You don't have offer yet"
+                        Style="{StaticResource ItemHeaderLabelStyle}"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

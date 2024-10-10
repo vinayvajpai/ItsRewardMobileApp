@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.NotificationPage"
+    xmlns:extensions="clr-namespace:itsRewards.Extensions"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels;assembly=itsRewards"
+    Visual="Material"
+    x:DataType="vm:NotificationViewModel"
+    Title="Notification"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
+    <Shell.TitleView>
+        <Grid  ColumnDefinitions="7.5*,2.5*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label
+                Text="Notification"
+                Style="{StaticResource TitleLabelStyle}"
+                VerticalOptions="Center"
+                Margin="0,0,0,0"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.BindingContext>
+        <vm:NotificationViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto"   Padding="20" ColumnDefinitions="6*,4*">
+        <Label Text="Email"
+                               Grid.Row="0"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding IsEmail,Mode=TwoWay}"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"/>
+
+                        <Label Text="App Notification"
+                               Grid.Row="1"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding IsAppNotification,Mode=TwoWay}"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"/>
+
+                        <Label Text="Send Notification before 8am(for morning drive)"
+                               Grid.Row="2"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding IsBefore,Mode=TwoWay}"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"/>
+
+                        <Label Text="Send Notification after 5pm(for after evening drive)"
+                               Grid.Row="3"
+                               Grid.Column="0"/>
+                        <Switch IsToggled="{Binding IsAfter,Mode=TwoWay}"
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                HorizontalOptions="EndAndExpand"/>
+    </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.CouponsPage"
+    xmlns:extensions="clr-namespace:itsRewards.Extensions"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels;assembly=itsRewards"
+    xmlns:m="clr-namespace:itsRewards.Models;assembly=itsRewards"
+    xmlns:behavior="clr-namespace:itsRewards.Extensions.Behaviors;assembly=itsRewards"
+    Visual="Material"
+    x:DataType="vm:CouponsPageViewModel"
+    Title="Coupons"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    x:Name="MyCouponPage">
+    <ContentPage.BindingContext>
+        <vm:CouponsPageViewModel  x:Name="ViewModel"/>
+    </ContentPage.BindingContext>
+    <Shell.TitleView >
+        <Grid  ColumnDefinitions="*,Auto"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label
+                Text="Coupons"
+                Style="{StaticResource TitleLabelStyle}"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"/>
+            <ImageButton Grid.Column="1"
+                Source="{extensions:ImageResource Source=itsRewards.Resources.Images.settings.png}"
+                Command="{Binding SettingsCommand}"
+                HeightRequest="40"
+                WidthRequest="40"
+                Padding="5"
+                HorizontalOptions="End"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout
+            Margin="20"
+            Spacing="10">
+            <CollectionView
+                x:Name="couponList"
+                ItemsSource="{Binding Coupons}"
+                HorizontalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.Header>
+                    <StackLayout
+                        Padding="0,0,1,10">
+                        <Frame
+                            Padding="20">
+                            <Label
+                                Text="Larger types of stores that sell groceries, such as supermarkets and hypermarkets, usually stock significant amounts of non-food products, such as clothing and household items."
+                                HorizontalTextAlignment="Center"/>
+                        </Frame>
+                        <ScrollView
+                Orientation="Horizontal"
+                HorizontalScrollBarVisibility="Never">
+                <StackLayout
+                    Orientation="Horizontal"
+                    BindableLayout.ItemsSource="{Binding CouponCategories}"
+                    Spacing="10"
+                    Margin="0,16,20,16">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="m:CouponCategory">
+                            <Button
+                                Text="{Binding Name}"
+                                BorderColor="{StaticResource ThemAlphaColor}"
+                                TextColor="{StaticResource ThemAlphaColor}"
+                                BackgroundColor="{StaticResource OverlayWhiteColor}"
+                                BorderWidth="1"
+                                Padding="16,0,16,0"
+                                Command="{Binding BindingContext.SelectCouponCategoryCommand, Source={x:Reference Name=MyCouponPage}}"
+                                CommandParameter="{Binding .}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="true">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource ThemeColor}"/>
+                                        <Setter Property="TextColor" Value="{StaticResource PageBackgroundColor}"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+            <Line
+                BackgroundColor="{StaticResource ThemAlphaColor}"
+                HeightRequest="1"
+                Opacity="0.5"
+                HorizontalOptions="FillAndExpand"
+                Margin="0,0,0,0"/>
+                        <!--<Label
+                            Style="{StaticResource ItemHeaderLabelStyle}"
+                            Text="Choose your coupon"
+                            HorizontalOptions="Start"
+                            TextColor="{StaticResource ThemeColor}"/>-->
+                        <Frame x:Name="frm" IsVisible="false"
+                            BackgroundColor="White"
+                            Padding="20">
+                            <Grid
+                                ColumnDefinitions="Auto,Auto,6*,2*"
+                                HorizontalOptions="FillAndExpand">
+                                <Label
+                                    Grid.Column="0"
+                                    Text="21+"
+                                    Style="{StaticResource ItemHeaderLabelStyleWithoutBreak}"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource ThemeColor}"/>
+                                <Image
+                                    Grid.Column="1"
+                                    Source="{extensions:ImageResource Source=itsRewards.Resources.Images.dollar.png}"
+                                    Style="{StaticResource IconImage}"
+                                    HeightRequest="40"
+                                    VerticalOptions="Center"
+                                    WidthRequest="40"/>
+                                    
+                                <Label
+                                    Grid.Column="2"
+                                    Text="Please verify age and identity for 21+ Deals"
+                                    Style="{StaticResource ItemHeaderLabelStyleWithoutBreak}"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource ThemeColor}"/>
+                                
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ProfileCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </Frame>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:Coupon">
+                        <Frame
+                            BackgroundColor="White"
+                            Padding="20">
+                            <Grid
+                                ColumnDefinitions="2*,6*,2*"
+                                HorizontalOptions="FillAndExpand">
+
+                                <Image
+                                    Grid.Column="0"
+                                    Source="{extensions:ImageResource Source=itsRewards.Resources.Images.dollar.png}"
+                                    Style="{StaticResource IconImage}"
+                                    HeightRequest="40"
+                                    VerticalOptions="Center"
+                                    WidthRequest="40"/>
+                                    
+                                <Label
+                                     Grid.Column="1"
+                                    Text="{Binding Name}"
+                                    Style="{StaticResource ItemHeaderLabelStyle}"
+                                    HorizontalTextAlignment="Start"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource ThemeColor}"/>
+
+                                <Label  Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Text="{Binding ActionSymbol}" WidthRequest="50" Padding="0" HorizontalTextAlignment="Center" FontSize="40" FontAttributes="Bold" TextColor="{StaticResource ThemeColor}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.AddRemoveToWalletCommand, Source={x:Reference Name=couponList}}" CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                                <!--<Label
+                                    Text="$ 1.00"
+                                    Style="{StaticResource TitleLabelStyle}"
+                                    FontSize="30"/>
+
+                                <Label
+                                    Text="Get $1.99 off on the total bill on food order."/>
+
+                                <Button
+                                    Text="COPY"
+                                    BackgroundColor="{StaticResource ThemAlphaColor}"
+                                    TextColor="{StaticResource ThemeColor}"
+                                    Command="{Binding BindingContext.CopyCommand, Source={x:Reference Name=MyCouponPage}}"
+                                    CommandParameter="{Binding .}"/>-->
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No Data Found" FontSize="18" TextColor="{StaticResource ThemeColor}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

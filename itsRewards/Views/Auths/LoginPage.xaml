@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.Auths.LoginPage"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels.Auths;assembly=itsRewards"
+    xmlns:converter="clr-namespace:itsRewards.Extensions.Converters;assembly=itsRewards"
+    xmlns:behavior="clr-namespace:itsRewards.Extensions.Behaviors;assembly=itsRewards"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    xmlns:controls="clr-namespace:itsRewards.Extensions.Controls;assembly=itsRewards"
+    x:DataType="vm:LoginPageViewModel"
+    Title="Login"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.BindingContext>
+        <vm:LoginPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converter:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid
+                RowDefinitions="*,auto,80"
+                Padding="40"> 
+                <StackLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                    <Image Style="{StaticResource AppLogoStyle}"/>
+                    <!--Label Text="itsRewards.com" Style="{StaticResource TitleLabelStyle}"/-->
+                </StackLayout>
+
+
+                <StackLayout
+                    Grid.Row="1"
+                    Spacing="0">
+                    <Label Text="Email/Cell Number"/>
+                    <Frame>
+                        <controls:CustomEntry  MaxLength="100"  Text="{Binding Email.Value}" Placeholder="Enter your Email Address or Cell Phone">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior  EventName="TextChanged" Command="{Binding ValidateEmailCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                    <Label
+                        Text="{Binding Email.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}"/>
+                    <Label Text="Password"/>
+                    <Frame>
+                        <controls:CustomEntry
+                            Placeholder="Enter Password here"
+                            Text="{Binding Password.Value}"
+                            IsPassword="True" MaxLength="30">
+                            <controls:CustomEntry.Behaviors>
+                                <behavior:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidatePasswordCommand}" />
+                            </controls:CustomEntry.Behaviors>
+                        </controls:CustomEntry>
+                    </Frame>
+                    <Label
+                        Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                        Style="{StaticResource ErrorLabelStyle}"/>
+
+                    <Label
+                        Text="Forgot your Password?"
+                        HorizontalOptions="End"
+                        Margin="0,0,0,20">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Button
+                        Text="SIGN IN"
+                        Command="{Binding LoginInCommand}"/> 
+                </StackLayout>
+
+                <Label
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Do you want to "/>
+                            <Span Text="Sign up?" FontFamily="Ubuntu Bold" FontSize="14">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SignUpCommand}"/>
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label> 
+            </Grid>
+        </ScrollView>        
+    </ContentPage.Content>
+</ContentPage>

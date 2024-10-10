@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="itsRewards.Views.SettingsPage"
+    xmlns:extensions="clr-namespace:itsRewards.Extensions"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels;assembly=itsRewards"
+    Visual="Material"
+    x:DataType="vm:SettingsPageViewModel"
+    Title="Settings"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.BindingContext>
+        <vm:SettingsPageViewModel/>
+    </ContentPage.BindingContext>
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="7.5*,2.5*" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label
+                Text="Settings"
+                Style="{StaticResource TitleLabelStyle}"
+                VerticalOptions="Center"
+                Margin="0,0,0,0"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout
+            Padding="20"
+            Spacing="20">
+            <Frame
+                BackgroundColor="White"
+                Padding="20,16,20,16">
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="20">
+                     <Image
+                        Source="{extensions:ImageResource Source=itsRewards.Resources.Images.profile.png}"
+                        Style="{StaticResource IconImage}"/>
+                    <Label
+                        Text="Profile"/>
+                </StackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ProfileCommand}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+             <Frame
+                BackgroundColor="White"
+                Padding="20,16,20,16">
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="15">
+                     <Image
+                        Source="{extensions:ImageResource Source=itsRewards.Resources.Images.notification.png}"
+                        Style="{StaticResource IconNotImage}"/>
+                    <Label
+                        Text="Notification"/>
+                </StackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NotificationCommand}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame
+                BackgroundColor="White"
+                Padding="20,16,20,16">
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="20">
+                     <Image
+                        Source="{extensions:ImageResource Source=itsRewards.Resources.Images.logout.png}"
+                        Style="{StaticResource IconImage}"/>
+                    <Label
+                        Text="Logout"/>
+                </StackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+        </StackLayout>        
+    </ContentPage.Content>
+</ContentPage>

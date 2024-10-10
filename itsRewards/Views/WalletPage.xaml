@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:itsRewards.ViewModels;assembly=itsRewards"
+    Visual="Material"
+    xmlns:m="clr-namespace:itsRewards.LocalDataBase;assembly=itsRewards"
+    x:DataType="vm:WalletPageViewModel"
+    xmlns:extensions="clr-namespace:itsRewards.Extensions"
+    Title="Wallet"
+    BackgroundColor="{StaticResource PageBackgroundColor}"
+    x:Class="itsRewards.Views.WalletPage">
+    <ContentPage.BindingContext>
+        <vm:WalletPageViewModel  x:Name="ViewModel"/>
+    </ContentPage.BindingContext>
+     <Shell.TitleView >
+        <Grid  ColumnDefinitions="*,Auto"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label
+                Text="Wallet"
+                Style="{StaticResource TitleLabelStyle}"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"/>
+        </Grid>
+    </Shell.TitleView>
+    <ContentPage.Content>
+         <StackLayout
+            Margin="20"
+            Spacing="10">
+            <CollectionView
+                x:Name="couponList"
+                ItemsSource="{Binding Wallets}"
+                HorizontalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="m:WalletDatabaseTable">
+                        <Frame
+                            BackgroundColor="White"
+                            Padding="20">
+                            <Grid ColumnDefinitions="2*,6*,2*" HorizontalOptions="FillAndExpand">
+                                <Image
+                                    Grid.Column="0"
+                                    Source="{extensions:ImageResource Source=itsRewards.Resources.Images.dollar.png}"
+                                    Style="{StaticResource IconImage}"
+                                    HeightRequest="40"
+                                    VerticalOptions="Center"
+                                    WidthRequest="40"/>
+                                    
+                                <Label
+                                    Grid.Column="1"
+                                    Text="{Binding data}"
+                                    Style="{StaticResource ItemHeaderLabelStyle}"
+                                    HorizontalTextAlignment="Start"
+                                    VerticalOptions="Center"
+                                    TextColor="{StaticResource ThemeColor}"/>
+
+                                <Label Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand" Text="--" WidthRequest="50" Padding="0" HorizontalTextAlignment="Center" FontSize="40" FontAttributes="Bold" TextColor="{StaticResource ThemeColor}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.RemoveToWalletCommand, Source={x:Reference Name=couponList}}" CommandParameter="{Binding .}"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No Data Found" FontSize="18" TextColor="{StaticResource ThemeColor}" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
